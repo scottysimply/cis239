@@ -1,0 +1,77 @@
+Any Character Except New Line
+\d      - Digit (0-9)
+\D      - Not a Digit (0-9)
+\w      - Word Character (a-z, A-Z, 0-9, _)
+\W      - Not a Word Character
+\s      - Whitespace (space, tab, newline)
+\S      - Not Whitespace (space, tab, newline)
+
+\b      - Word Boundary
+\B      - Not a Word Boundary
+^       - Beginning of a String
+$       - End of a String
+
+[]      - Matches Characters in brackets
+[^ ]    - Matches Characters NOT in brackets
+|       - Either Or
+( )     - Group
+
+Quantifiers:
+*       - 0 or More
++       - 1 or More
+?       - 0 or One
+{3}     - Exact Number
+{3,4}   - Range of Numbers (Minimum, Maximum)
+
+
+#### Sample Regexs ####
+
+https://regex101.com/
+https://regexlearn.com/  regex tutorial
+
+[aeiou]
+[0-9]{3}-[0-9]{4}
+[0-9]{3}-[0-9]{3}-[0-9]{4}
+[0-9]{3}[-.][0-9]{3}[-.][0-9]{4}
+
+^[a-zA-Z ]+$
+This regex pattern is designed to match a string that contains only letters (both uppercase and lowercase) and spaces.
+
+Caret (^): This denotes the start of the string. It ensures that the match starts from the beginning of the string.
+[a-zA-Z ]: This is a character set that allows:
++ The plus sign means "one or more" of the preceding character set. This ensures that the string contains at least one letter or space and can be of any length, as long as it consists only of letters and spaces.
+Dollar sign ($): This denotes the end of the string, ensuring that the match goes all the way to the end of the string and no other characters are allowed beyond letters and spaces.
+
+
+
+[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+  
+
+Used to match emails
+[a-zA-Z0-9_.+-]: This is a character set that allows any of the following characters:
+
+    a-z: Any lowercase letter from "a" to "z".
+    A-Z: Any uppercase letter from "A" to "Z".
+    0-9: Any digit from 0 to 9.
+    _: An underscore.
+    .: A period (dot).
+    +: A plus sign.
+    -: A hyphen.
+
++: The plus sign means "one or more" of the preceding characters. This allows a string with one or more letters, digits, underscores, periods, plus signs, or hyphens, which is typical for the username part of an email.
+
+@: This matches the literal @ symbol, which separates the username from the domain in an email address.
+
+[a-zA-Z0-9-]: This character set allows:
+
+    a-z: Any lowercase letter.
+    A-Z: Any uppercase letter.
+    0-9: Any digit.
+    -: A hyphen.
+
++: This means "one or more" of the preceding characters. This part represents the domain name, which typically consists of letters, digits, and sometimes hyphens (e.g., example in example.com).
+
+\. :This matches a literal period (dot). Since . has a special meaning in regex (it matches any character), you need to escape it with a backslash (\) to match an actual period in the domain name.
+
+[a-zA-Z0-9-.]: This is another character set
+
++: This means "one or more" of the preceding characters. It allows for multiple levels of domain extensions (e.g., .com, .co.uk).

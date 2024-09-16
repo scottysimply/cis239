@@ -1,0 +1,29 @@
+321-555-4321
+123.555.1234
+123*555*1234
+800-555-4321
+900.555.1234
+
+
+abcdefghijklmnopqurtuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+1234567890
+
+
+example@example.com
+user_name@domain.org
+
+Laura Jefferson
+516-555-4615
+890 Main St., Pythonville LA 29947
+laurajefferson@bogusemail.com
+
+Maria Johnson
+127-555-1867
+884 High St., Braavos‎ ME 43597
+mariajohnson@bogusemail.com
+
+Michael Arnold
+608-555-4938
+249 Elm St., Quahog OR 90938
+michaelarnold@bogusemail.com
