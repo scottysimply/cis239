@@ -8,15 +8,21 @@
 <body>
     <?php
     include "functions.php";
-    if (validate($_GET['name'], "/^[a-zA-Z ]+$/")) {
-        echo('Name is not valid');
+    if (!isset($_GET['name']) || !isset($_GET['email']) || !isset($_GET['phone'])) {
+        echo('Please enter all of your information');
     }
-    if (validate($_GET['email'], "/^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/")) {
-        echo('Email is not valid');
+    else {
+        if (!validate($_GET['name'], "/^[a-zA-Z ]+$/")) {
+            echo('Name is not valid<br/>');
+        }
+        if (!validate($_GET['email'], "/^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+.[a-zA-Z0-9_]+/")) {
+            echo('Email is not valid<br/>');
+        }
+        if (!validate($_GET['phone'], "/^(\d{3}(\-|\.|)|\(\d{3}\)\ )\d{3}(\-|\.|)\d{4}/")) {
+            echo('Phone is not valid<br/>');
+        }
     }
-    if (validate($_GET['phone'], "/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.\-]\d{3}[\s.\-]\d{4}$/")) {
-        echo('Phone is not valid');
-    }
+
 
 
     ?>
