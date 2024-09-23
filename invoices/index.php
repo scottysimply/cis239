@@ -14,14 +14,14 @@
             <span class="navbar-brand mb-0 h1">Invoice Calculator</span>
         </div>
     </nav>
-    <div class="container bg-primary-subtle w-25 mt-3 p-3 rounded-3 border border-1 border-primary">
+    <div class="container bg-primary-subtle w-50 mt-3 p-3 rounded-3 border border-1 border-primary">
         <?php
             // Only perform logic if the form was submitted
             if (isset($_GET['invoiceDate']) && isset($_GET['expiryDate'])) {
                 // Calculate time difference
-                $yeardiff = substr(date($_GET['invoiceDate']), 0, 4) - substr(date($_GET['expiryDate']), 0, 4);
-                $monthdiff = substr(date($_GET['invoiceDate']), 5, 2) - substr(date($_GET['expiryDate']), 5, 2);
-                $daydiff = substr(date($_GET['invoiceDate']), 8, 2) - substr(date($_GET['expiryDate']), 8, 2);
+                $yeardiff = substr(date($_GET['expiryDate']), 0, 4) - substr(date($_GET['invoiceDate']), 0, 4);
+                $monthdiff = substr(date($_GET['expiryDate']), 5, 2) - substr(date($_GET['invoiceDate']), 5, 2);
+                $daydiff = substr(date($_GET['expiryDate']), 8, 2) - substr(date($_GET['invoiceDate']), 8, 2);
                 // Variables for displaying to user
                 $absyear = abs($yeardiff);
                 $absmonth = abs($monthdiff);
