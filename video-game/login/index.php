@@ -23,12 +23,13 @@
         return false;
     }
     $failedLogin = false;
-    $setUser = false;
-    $setPass = false;
+    $invalidName = false;
+    $username = filter_input(INPUT_POST, 'username');
+    $password = filter_input(INPUT_POST,'password');
     // If set, the user has attempted to login
-    if (isset($_POST['username']) && $_POST['password']) {
+    if ($username && $password) {
         // Attempt to login the user
-        $loggedIn = logInUser($_POST['username'], $_POST['password']);
+        $loggedIn = logInUser($username, $password);
         // If logged in, send to games page _with_ login info
         if ($loggedIn) {
             // Add to GET
@@ -36,10 +37,16 @@
             header("Location: /cis239/video-game/games?login=true");
             exit();
         }
+        if ($username) {
+            $invalidName = true;
+        }
         // Else, display error message
         $failedLogin = true;
     }
     else { // User or password was unset. Display required warnings
+        if ($username) {
+            $invalidName = true;
+        }
         $failedLogin = true;
     }
 ?>
@@ -62,12 +69,19 @@
             <div class="mb-3">
                 <label for="userLogin" class="form-label">Username</label>
                 <input class="form-control" type="text" name="username" id="userLogin">
-                <?php if ($failedLogin && isset($_GET['username']) && $_GET['username'] != "") echo('<p class="danger" fs-5">Please type a username.</p>' . "\n"); ?>
+                <?php
+                    if ($failedLogin && $username && $invalidName) {
+                        echo('<p class="text-danger" fs-5">Invalid username ' . htmlspecialchars($username) . '.</p>' . "\n"); 
+                    }
+                    else if ($failedLogin && !$username) { 
+                        echo('<p class="text-danger" fs-5">Please type a username.</p>' . "\n"); 
+                    }
+                ?>
             </div>
             <div class="mb-3">
                 <label for="passLogin" class="form-label">Password</label>
                 <input class="form-control" type="text" name="password" id="passLogin">
-                <?php if ($setPass) echo('<p class="danger" fs-5">Please type a password.</p>' . "\n"); ?>
+                <?php if ($failedLogin && !$password) echo('<p class="text-danger" fs-5">Please type a password.</p>' . "\n"); ?>
             </div>
             <input class="btn btn-primary" type="submit" value="Login">
         </form>
