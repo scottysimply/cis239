@@ -34,7 +34,7 @@
             if (isset($genre) && strlen($genre) < 64 && $genre != "") {
                 $this->genreValidated = true;
             }
-            if (isset($imagePath) && strlen($imagePath) < 32 && $imagePath != "") {
+            if (isset($image_path) && strlen($image_path) < 32 && $image_path != "") {
                 $this->imagePathValidated = true;
             }
         }
@@ -157,12 +157,12 @@
                 $target_file = 'images/' . $image['name'];
                 if (!file_exists($target_file) && strlen($image['name']) < 32) {
                     // Upload the image
-                    if (move_uploaded_file($image['tmpname'], $target_file)) {
+                    if (move_uploaded_file($image['tmp_name'], $target_file)) {
                         $imagePath = $image['name'];
                     }
                 }
             }
-            // Assemble our image data
+            // Assemble our game data
             return new GamePostData($title, $genre, $platform, $imagePath);
         }
         /**
@@ -175,14 +175,21 @@
                 $max_value = $db->query("SELECT MAX(game_id) + 1 FROM vg_games")->fetchAll()[0][0];
                 $insert_statement = 
                "INSERT INTO vg_games
-                VALUES ($max_value, $gameData->title, $gameData->genre, $gameData->platform, $gameData->image_path)
+                VALUES ($max_value, '$gameData->title', '$gameData->genre', '$gameData->platform', '$gameData->imagePath')
                 ";
                 // Execute query. If nothing bad happened, it succeeded.
                 $db->query($insert_statement);
+                // Since we succeeded, unset everything in post.
+                unset($_POST['gameTitle']);
+                unset($_POST['gameGenre']);
+                unset($_POST['gamePlatform']);
+                unset($_POST['gameImage']);
+                unset($_POST['submitted']);
+                unset($_FILES['gameImage']);
                 return true;
             }
             catch (PDOException $ex) {
-                
+                echo $ex;
             }
             return false;
         }
