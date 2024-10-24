@@ -5,7 +5,7 @@
     <form class="border border-primary-subtle rounded bg-primary bg-opacity-10 p-3" action="/cis239/video-game-mvc/redirector.php" method="post">
         <div class="mb-3">
             <label for="userLogin" class="form-label">Username</label>
-            <input class="form-control" type="text" name="username" id="userLogin">
+            <input class="form-control" type="username" name="username" id="userLogin">
             <?php
                 if (Controller::$failedLogin && Controller::$username && Controller::$invalidName) {
                     echo('<p class="text-danger" fs-5">Invalid username ' . htmlspecialchars(Controller::$username) . '.</p>' . "\n"); 
@@ -17,7 +17,7 @@
         </div>
         <div class="mb-3">
             <label for="passLogin" class="form-label">Password</label>
-            <input class="form-control" type="text" name="password" id="passLogin">
+            <input class="form-control" type="password" name="password" id="passLogin">
             <?php if (Controller::$failedLogin && !Controller::$password) echo('<p class="text-danger" fs-5">Please type a password.</p>' . "\n"); ?>
         </div>
         <input class="btn btn-primary" type="submit" value="Login">
