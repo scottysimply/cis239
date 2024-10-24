@@ -105,7 +105,7 @@
 
 ?>
 <!--Card container-->
-<div class="container">
+<div class="container mt-5">
         <div class="row align-items-center g-3">
         <?php
             // Display a card for each object in the CSV
