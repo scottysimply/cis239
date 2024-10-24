@@ -11,7 +11,7 @@
 ?>
 <div class="container mt-5 col-5 col-3-md">
     <h3>Add Game</h3>
-    <form method="post" action="./?login=true" class="form border p-2 border-primary-subtle rounded">
+    <form method="post" class="form border p-2 border-primary-subtle rounded" enctype="multipart/form-data">
         <!--This input is what i use to know if the form was submitted. This is something i picked up from asp.net-->
         <input value="true" name="submitted" hidden/>
         <label for="game-title">Title: </label>
