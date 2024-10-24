@@ -1,6 +1,6 @@
 <!--Login form-->
 <?php include_once 'controller.php'; ?>
-<div class="container-md col-5 mt-3">
+<div class="container-md col-5 mt-3 mb-5">
     <h1 class="fw-semibold">Login</h1>
     <form class="border border-primary-subtle rounded bg-primary bg-opacity-10 p-3" action="/cis239/video-game-mvc/redirector.php" method="post">
         <div class="mb-3">

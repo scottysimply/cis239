@@ -1,4 +1,44 @@
 <?php
+    class Game {
+        public int $id;
+        public string $title;
+        public string $platform;
+        public string $genre;
+        public string $image_path;
+        public function __construct() {
+
+        }
+    }
+    class GamePostData {
+        public string $title;
+        public bool $titleValidated = false;
+        public string $platform;
+        public bool $platformValidated = false;
+        public string $genre;
+        public bool $genreValidated = false;
+        public string $imagePath;
+        public bool $imagePathValidated = false;
+        public function __construct($title, $platform, $genre, $image_path)
+        {
+            $this->title = $title;
+            $this->platform = $platform;
+            $this->genre = $genre;
+            $this->imagePath = $image_path;
+            // Validate
+            if (isset($title) && strlen($title) < 48 && $title != "") {
+                $this->titleValidated = true;
+            }
+            if (isset($platform) && strlen($platform) < 64 && $platform != "") {
+                $this->platformValidated = true;
+            }
+            if (isset($genre) && strlen($genre) < 64 && $genre != "") {
+                $this->genreValidated = true;
+            }
+            if (isset($imagePath) && strlen($imagePath) < 32 && $imagePath != "") {
+                $this->imagePathValidated = true;
+            }
+        }
+    }
     class Controller {
         /**
          * Attempts to log a user in.
@@ -57,6 +97,94 @@
                 Controller::$failedLogin = true;
             }
         }
+        /**
+         * Gets all of the games in the database. Returns an empty array if nothing was found.
+         */
+        public static function getGames() : array {
+            // Obtain games from database
+            $games = [];
+            // Query database for games
+            try {
+                $db = new PDO("mysql:host=localhost;dbname=videogame_simplified", "root", "");
+                // Begin query
+                $game_query = 
+                "SELECT *
+                FROM vg_games AS game
+                ";
+        
+                // Execute query
+                $game_results = $db->query($game_query)->fetchAll();
+                // Map results to our objects
+                foreach ($game_results as $game) {
+                    $this_game = new Game();
+                    $this_game->title = $game['title'];
+                    $this_game->id = $game['game_id'];
+                    $this_game->genre = $game['genre'];
+                    $this_game->platform = $game['platform'];
+                    $this_game->image_path = $game['image_path'];
+                    // Push game
+                    array_push($games, $this_game);
+                }
+            
+            }
+            catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+            return $games;
+        }
+        /**
+         * Gets game data from a POST requests.
+         */
+        public static function getGameDataFromPost() : GamePostData {
+            // I know this is a very wordy initialization, but this is so form error messages can be correctly raised.
+            $title = "";
+            $genre = "";
+            $platform = "";
+            $imagePath = "";
+            if (isset($_POST['gameTitle'])) {
+                $title = $_POST['gameTitle'];
+            }
+            if (isset($_POST['gameGenre'])) {
+                $genre = $_POST['gameGenre'];
+            }
+            if (isset($_POST['gamePlatform'])) {
+                $platform = $_POST['gamePlatform'];
+            }
+            // We have to get the image situated now.
+            if (isset($_FILES['gameImage'])) {
+                $image = $_FILES['gameImage'];
+                // Try to save the image
+                $target_file = 'images/' . $image['name'];
+                if (!file_exists($target_file) && strlen($image['name']) < 32) {
+                    // Upload the image
+                    if (move_uploaded_file($image['tmpname'], $target_file)) {
+                        $imagePath = $image['name'];
+                    }
+                }
+            }
+            // Assemble our image data
+            return new GamePostData($title, $genre, $platform, $imagePath);
+        }
+        /**
+         * Tries to add a game to the database. Returns whether it successfully added the game.
+         */
+        public static function tryAddGame(GamePostData $gameData) : bool {
+            try {
+                // Setup database
+                $db = new PDO("mysql:host=localhost;dbname=videogame_simplified", "root", "");
+                $max_value = $db->query("SELECT MAX(game_id) + 1 FROM vg_games")->fetchAll()[0][0];
+                $insert_statement = 
+               "INSERT INTO vg_games
+                VALUES ($max_value, $gameData->title, $gameData->genre, $gameData->platform, $gameData->image_path)
+                ";
+                // Execute query. If nothing bad happened, it succeeded.
+                $db->query($insert_statement);
+                return true;
+            }
+            catch (PDOException $ex) {
+                
+            }
+            return false;
+        }
     }
-
 ?>

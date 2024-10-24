@@ -14,6 +14,7 @@
     <?php
         if (isset($_GET['login']) && $_GET['login']) {
             include 'games.php';
+            include 'addgame.php';
         }
         else {
             include 'form.php';
