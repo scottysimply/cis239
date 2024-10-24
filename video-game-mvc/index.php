@@ -13,6 +13,15 @@
 
     <?php
         if (isset($_GET['login']) && $_GET['login']) {
+            // The following code was previously on the 'addgame.php' file. However, I actually need this to run before including 'games.php' so it has been extracted here.
+            $addedGame = false;
+            // If the form was submitted, try to add to the database.
+            if (isset($_POST['submitted'])) {
+                $gameData = Controller::getGameDataFromPost();
+                if ($gameData->titleValidated && $gameData->genreValidated && $gameData->platformValidated && $gameData->imagePathValidated) {
+                    $addedGame = Controller::tryAddGame($gameData);
+                }
+            }
             include 'games.php';
             include 'addgame.php';
         }

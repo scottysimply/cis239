@@ -1,13 +1,5 @@
 <?php
     include_once 'controller.php';
-    // If the form has been submitted before, start trying to add to database.
-    $addedGame = false;
-    if (isset($_POST['submitted'])) {
-        $gameData = Controller::getGameDataFromPost();
-        if ($gameData->titleValidated && $gameData->genreValidated && $gameData->platformValidated && $gameData->imagePathValidated) {
-            $addedGame = Controller::tryAddGame($gameData);
-        }
-    }
 ?>
 <div class="container mt-5 col-5 col-3-md">
     <h3>Add Game</h3>
