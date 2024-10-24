@@ -162,8 +162,18 @@
                     }
                 }
             }
+            Controller::unsetGameData();
             // Assemble our game data
             return new GamePostData($title, $genre, $platform, $imagePath);
+        }
+        public static function unsetGameData() {
+            // Unset all post variables after submission
+            unset($_POST['gameTitle']);
+            unset($_POST['gameGenre']);
+            unset($_POST['gamePlatform']);
+            unset($_POST['gameImage']);
+            unset($_POST['submitted']);
+            unset($_FILES['gameImage']);
         }
         /**
          * Tries to add a game to the database. Returns whether it successfully added the game.
@@ -179,13 +189,6 @@
                 ";
                 // Execute query. If nothing bad happened, it succeeded.
                 $db->query($insert_statement);
-                // Since we succeeded, unset everything in post.
-                unset($_POST['gameTitle']);
-                unset($_POST['gameGenre']);
-                unset($_POST['gamePlatform']);
-                unset($_POST['gameImage']);
-                unset($_POST['submitted']);
-                unset($_FILES['gameImage']);
                 return true;
             }
             catch (PDOException $ex) {
