@@ -56,6 +56,6 @@
                 echo("<p class=\"text-danger\" fs-5>$error_msg</p>"); 
             }
         ?>
-        <button type="submit">Add Game</button>
+        <button type="submit" class="btn rounded-1 btn-primary">Add Game</button>
     </form>
 </div>
