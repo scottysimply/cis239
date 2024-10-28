@@ -1,7 +1,7 @@
 <?php
     include_once 'controller.php';
 ?>
-<div class="container mt-5 col-5 col-3-md mb-5">
+<div class="container mt-5 col-10 col-lg-7 mb-5">
     <h3>Add Game</h3>
     <form method="post" class="form border p-2 border-primary-subtle rounded" enctype="multipart/form-data">
         <!--This input is what i use to know if the form was submitted. This is something i picked up from asp.net-->
