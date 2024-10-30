@@ -22,8 +22,14 @@
                     $addedGame = Controller::tryAddGame($gameData);
                 }
             }
-            include 'games.php';
-            include 'addgame.php';
+            // If a game is to be edited, move to the edit page.
+            if (isset($_GET['editId'])) {
+                include 'editgame.php';
+            }
+            else {
+                include 'games.php';
+                include 'addgame.php';
+            }
         }
         else {
             include 'form.php';
