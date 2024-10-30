@@ -15,7 +15,8 @@
                 <div class="card bg-primary bg-opacity-10 h-100">
                     <img class="card-img-top rounded-top" style="object-fit: cover;" src="/cis239/video-game-mvc/images/<?=$game->image_path?>" alt="<?=$game->title?>">
                     <div class="card-body">
-                        <h3 class="card-title"><?=htmlspecialchars($game->title)?></h3>
+                        <!--This card title is going to send a GET request with this game's ID, so that we can edit the game.-->
+                        <h3 class="card-title"><a href="?login=true&editId=<?=$game->id?>"><?=htmlspecialchars($game->title)?></a></h3>
                         <p>Genre: <?=htmlspecialchars($game->genre)?></p>
                         <p>Play on: <?=htmlspecialchars($game->platform)?></p>
                     </div>
