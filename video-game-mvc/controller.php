@@ -197,4 +197,35 @@
             return false;
         }
     }
+    /**
+     * Gets a single game by its ID. Returns null if a game was not found.
+     * @param int $id
+     * @return ?Game
+     */
+    function getGameById(int $id): ?Game {
+        // Query the database for this ID
+        try {
+            // Setup PDO
+            $db = new PDO("mysql:host=localhost;dbname=videogame_simplified", "root", "");
+            $query_statement = "SELECT * FROM vg_games WHERE game_id = :gameId";
+            // Prepares the statement to prevent sql injection
+            $statement = $db->prepare($query_statement);
+            $statement->execute([':gameId' => $id]);
+            $game = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($game != null && $game != []) {
+                // Assemble game
+                $actualGame = new Game();
+                $actualGame->id = $id;
+                $actualGame->title = $game['title'];
+                $actualGame->genre = $game['genre'];
+                $actualGame->platform = $game['platform'];
+                $actualGame->image_path = $game['image_path'];
+                return $actualGame;
+            }
+        }
+        catch (PDOException $ex) {
+            echo $ex;
+        }
+        return null;
+    }
 ?>
