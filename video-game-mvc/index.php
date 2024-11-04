@@ -22,6 +22,16 @@
                     $addedGame = Controller::tryAddGame($gameData);
                 }
             }
+            // If the edit form was submitted, edit the given game.
+            if (isset($_POST['editSubmit'])) {
+                updateGame($_POST['editId'], $_POST['editTitle'], $_POST['editGenre'], $_POST['editPlatform']);
+                // unset post variables
+                unset($_POST['editSubmit']);
+                unset($_POST['editId']);
+                unset($_POST['editTitle']);
+                unset($_POST['editGenre']);
+                unset($_POST['editPlatform']);
+            }
             // If a game is to be edited, move to the edit page.
             if (isset($_GET['editId'])) {
                 include 'editgame.php';

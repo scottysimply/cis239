@@ -228,4 +228,33 @@
         }
         return null;
     }
+    /**
+     * Updates a game by id and the given parameters
+     */
+    function updateGame($id, $title, $genre, $platform) {
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=videogame_simplified", "root", "");
+            $query = 
+            "UPDATE vg_games
+             SET title = :title, genre = :genre, platform = :platform
+             WHERE game_id = :id;
+             ";
+            // Prepare the query
+            $statement = $db->prepare($query);
+            $statement->execute([
+                ':title' => $title,
+                ':genre' => $genre,
+                ':platform' => $platform,
+                ':id' => $id
+            ]);
+            // Return true since we successfully added the game
+            return true;
+
+        }
+        catch (PDOException $ex) {
+            echo $ex;
+        }
+        // the catch will bring control down to here
+        return false;
+    }
 ?>
